@@ -80,3 +80,14 @@ SqlNode SqlDescribeSpacePower() :
         return null;
     }
 }
+
+SqlNode SqlCausalImpact(Span s) :
+{
+    final SqlIdentifier sourceVariable;
+    final SqlIdentifier targetVariable;
+}
+{
+    <CAUSAL> <IMPACT> <OF> sourceVariable=CompoundIdentifier() <ON> targetVariable=CompoundIdentifier() {
+        return new SqlCausalImpactNode(s.end(this), sourceVariable, targetVariable)
+    }
+}
