@@ -36,9 +36,8 @@ public class SqlCausalImpactNode extends SqlCall {
     }
 
     @Override
-    public <R> void accept(SqlVisitor<R> visitor) {
-        // TODO Fix issue with void acceptance
-        visitor.visit(this);
+    public <R> R accept(SqlVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 
     public SqlIdentifier getSourceVariable() {
