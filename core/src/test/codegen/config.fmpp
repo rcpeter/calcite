@@ -38,6 +38,8 @@ data: {
     keywords: [
       "UPLOAD"
       "JAR"
+      "CAUSAL"
+      "IMPACT"
     ]
 
     # List of methods for parsing custom SQL statements.
@@ -45,6 +47,7 @@ data: {
     # Example: "SqlShowDatabases()", "SqlShowTables()".
     statementParserMethods: [
       "SqlDescribeSpacePower()"
+      "SqlCausalImpactNode()"
     ]
 
     # List of methods for parsing extensions to "ALTER <scope>" calls.

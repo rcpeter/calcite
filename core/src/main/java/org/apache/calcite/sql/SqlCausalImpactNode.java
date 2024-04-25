@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.calcite.sql.parser.SqlParserPos;
 import org.apache.calcite.sql.util.SqlVisitor;
+import org.apache.calcite.util.ImmutableNullableList;
 
 public class SqlCausalImpactNode extends SqlCall {
     private final SqlIdentifier sourceVariable;
@@ -55,7 +56,6 @@ public class SqlCausalImpactNode extends SqlCall {
 
     @Override
     public List<SqlNode> getOperandList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOperandList'");
+        return ImmutableNullableList.of(sourceVariable, targetVariable);
     }
 }
