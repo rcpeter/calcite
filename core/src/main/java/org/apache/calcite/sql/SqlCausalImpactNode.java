@@ -49,9 +49,16 @@ public class SqlCausalImpactNode extends SqlCall {
         return targetVariable;
     }
 
+    // @Override
+    // public SqlOperator getOperator() {
+    // return new SqlSpecialOperator("CAUSAL IMPACT", SqlKind.OTHER);
+    // }
+
+    private static final SqlOperator OPERATOR = new SqlSpecialOperator("CAUSAL IMPACT", SqlKind.OTHER);
+
     @Override
     public SqlOperator getOperator() {
-        return new SqlSpecialOperator("CAUSAL IMPACT", SqlKind.OTHER);
+        return OPERATOR;
     }
 
     @Override
