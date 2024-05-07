@@ -88,6 +88,6 @@ SqlNode SqlCausalImpact(Span s) :
 }
 {
     <CAUSAL> <IMPACT> <OF> sourceVariable=CompoundIdentifier() <ON> targetVariable=CompoundIdentifier() {
-        return new SqlCausalImpactNode(s.end(this), sourceVariable, targetVariable)
+        return new SqlCausalImpactNode(s.end(this), sourceVariable, targetVariable);
     }
 }
