@@ -23,11 +23,11 @@ import org.apache.calcite.sql.parser.SqlParserPos;
 import org.apache.calcite.sql.util.SqlVisitor;
 import org.apache.calcite.util.ImmutableNullableList;
 
-public class SqlCausalImpactNode extends SqlCall {
+public class SqlCausalImpact extends SqlCall {
     private final SqlIdentifier sourceVariable;
     private final SqlIdentifier targetVariable;
 
-    public SqlCausalImpactNode(SqlParserPos pos, SqlIdentifier sourceVariable, SqlIdentifier targetVariable) {
+    public SqlCausalImpact(SqlParserPos pos, SqlIdentifier sourceVariable, SqlIdentifier targetVariable) {
         super(pos);
         this.sourceVariable = sourceVariable;
         this.targetVariable = targetVariable;

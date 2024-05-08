@@ -47,7 +47,7 @@ data: {
     # Example: "SqlShowDatabases()", "SqlShowTables()".
     statementParserMethods: [
       "SqlDescribeSpacePower()"
-      "SqlCausalImpactNode()"
+      "SqlCausalImpact()"
     ]
 
     # List of methods for parsing extensions to "ALTER <scope>" calls.
