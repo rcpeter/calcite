@@ -81,7 +81,7 @@ SqlNode SqlDescribeSpacePower() :
     }
 }
 
-SqlNode SqlCausalImpact(Span s) :
+SqlNode SqlCausalImpact() :
 {
     final SqlIdentifier sourceVariable;
     final SqlIdentifier targetVariable;

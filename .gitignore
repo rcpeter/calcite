@@ -66,3 +66,6 @@ local.properties
 
 # jenv
 .java-version
+
+Footnotes_to_visit.md
+clear_gradle.sh

@@ -16,7 +16,7 @@
  */
 
 /*
- * Overrides: overrides the createCall method to return a new SqlCausalImpact. It also overrides the unparser method to define how the CAUSAL IMPACT keyword should be unparsed to SQL. 
+ * Overrides: overrides the createCall method to return a new SqlCausalImpact. It also overrides the unparser method to define how the CAUSAL IMPACT keyword should be unparsed to SQL.
  */
 package org.apache.calcite.sql;
 
@@ -27,13 +27,11 @@ public class SqlCausalImpactOperator extends SqlSpecialOperator {
         super("CAUSAL IMPACT", SqlKind.OTHER_FUNCTION);
     }
 
-    @Override
-    public SqlCall createCall(SqlLiteral functionQualifier, SqlParserPos pos, SqlNode... operands) {
+    @Override public SqlCall createCall(SqlLiteral functionQualifier, SqlParserPos pos, SqlNode... operands) {
         return new SqlCausalImpact(pos, (SqlIdentifier) operands[0], (SqlIdentifier) operands[1]);
     }
 
-    @Override
-    public void unparse(SqlWriter writer, SqlCall call, int leftPrec, int rightPrec) {
+    @Override public void unparse(SqlWriter writer, SqlCall call, int leftPrec, int rightPrec) {
         final SqlWriter.Frame frame = writer.startFunCall(getName());
         call.operand(0).unparse(writer, leftPrec, rightPrec);
         writer.keyword("ON");
