@@ -29,6 +29,9 @@ import java.net.URI
 import net.ltgt.gradle.errorprone.errorprone
 import org.apache.calcite.buildtools.buildext.dsl.ParenthesisBalancer
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.repositories
+import org.gradle.kotlin.dsl.withType
 
 plugins {
     // java-base is needed for platform(...) resolution,
@@ -229,6 +232,20 @@ val sqllineClasspath by configurations.creating {
         attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.CLASSES_AND_RESOURCES))
         attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, JavaVersion.current().majorVersion.toInt())
         attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+    }
+}
+
+subprojects {
+    if (name != "bom") {
+        apply(plugin = "java-library")
+
+        repositories {
+            mavenCentral()
+        }
+
+        dependencies {
+            "implementation"("org.jpype:jpype:1.3.0")
+        }
     }
 }
 
