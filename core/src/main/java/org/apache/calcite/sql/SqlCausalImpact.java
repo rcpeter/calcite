@@ -29,14 +29,15 @@ public class SqlCausalImpact extends SqlCall {
   private final SqlIdentifier sourceVariable;
   private final SqlIdentifier targetVariable;
 
-    /**
-     * Creates a SqlCausalImpact.
-     *
-     * @param pos            Position.
-     * @param sourceVariable Source variable.
-     * @param targetVariable Target variable.
-     */
-  public SqlCausalImpact(SqlParserPos pos, SqlIdentifier sourceVariable, SqlIdentifier targetVariable) {
+  /**
+   * Creates a SqlCausalImpact.
+   *
+   * @param pos            Position.
+   * @param sourceVariable Source variable.
+   * @param targetVariable Target variable.
+   */
+  public SqlCausalImpact(SqlParserPos pos,
+      SqlIdentifier sourceVariable, SqlIdentifier targetVariable) {
     super(pos);
     this.sourceVariable = sourceVariable;
     this.targetVariable = targetVariable;
@@ -65,7 +66,8 @@ public class SqlCausalImpact extends SqlCall {
     return targetVariable;
   }
 
-  private static final SqlOperator OPERATOR = new SqlSpecialOperator("CAUSAL IMPACT", SqlKind.OTHER);
+  private static final SqlOperator OPERATOR = new
+      SqlSpecialOperator("CAUSAL IMPACT", SqlKind.OTHER);
 
   @Override public SqlOperator getOperator() {
     return OPERATOR;
