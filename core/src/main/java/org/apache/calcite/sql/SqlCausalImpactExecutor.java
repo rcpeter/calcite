@@ -16,41 +16,42 @@
  */
 package org.apache.calcite.sql;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import jpype.JPypeContext;
+import jpype.JPypeException;
+import jpype.JPypeModule;
 
 public class SqlCausalImpactExecutor {
 
-  public static void main(String[] args) {
-    try {
-      // Define the command to run the Python script
-      String[] cmd = {
-        "python3", // or "python" if that's how you call Python on your system
-        "causal_impact.py",
-        "source_data", // replace with your actual source data
-        "target_data" // replace with your actual target data
-      };
+    public static void execute(String sourceVariable, String targetVariable) {
+        if (!JPypeContext.isStarted()) {
+            String pythonPath = "/Users/ronnit/anaconda3/envs/ronnit_thesis/bin/python";
+            String jvmPath = "/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/lib/server/libjvm.dylib";
+            String[] jvmArgs = { "-Dpython.home=" + pythonPath, "-ea" };
+            JPypeContext.start(jvmPath, jvmArgs);
+        }
 
-      // Create a ProcessBuilder
-      ProcessBuilder pb = new ProcessBuilder(cmd);
+        try {
+            JPypeModule causalImpactModule = JPypeContext.importModule("causal_impact");
 
-      // Start the process
-      Process process = pb.start();
+            // Arguments for the python function
+            List<Object> args = new ArrayList<>();
+            args.add(sourceVariable);
+            args.add(targetVariable);
+            causalImpactModule.callAttr("compute_cate", args.toArray());
 
-      // Read the output from the process
-      BufferedReader reader = new BufferedReader(new
-        InputStreamReader(process.getInputStream()));
-      String line;
-      while ((line = reader.readLine()) != null) {
-        System.out.println(line);
-      }
+        } catch (JPypeException e) {
+            e.printStackTrace();
+        } finally {
+            if (JPypeContext.isStarted()) {
+                JPypeContext.stop();
+            }
+        }
+    }
 
-      // Wait for the process to complete
-      int exitCode = process.waitFor();
-      System.out.println("Exited with code: " + exitCode);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-  }
-}
+    public static void main(String[] args) {
+        execute("sourceVariable", "targetVariable");
+    }
 }
