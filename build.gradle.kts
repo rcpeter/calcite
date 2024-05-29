@@ -241,10 +241,13 @@ subprojects {
 
         repositories {
             mavenCentral()
+            flatDir {
+                dirs("libs")
+            }
         }
 
         dependencies {
-            "implementation"("org.jpype:jpype:1.3.0")
+            add("implementation", files("libs/org.jpype.jar"))
         }
     }
 }
