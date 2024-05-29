@@ -23,7 +23,9 @@ def compute_cate(source, target):
     return cate_score
 
 if __name__ == "__main__":
-    source = sys.argv[1]
-    target = sys.argv[2]
-    cate_score = compute_cate(source, target)
+    if len(sys.argv) != 3:
+        print("Usage: python causal_impact.py <sourceVariable> <targetVariable>")
+    sourceVariable = sys.argv[1]
+    targetVariable = sys.argv[2]
+    cate_score = compute_cate(sourceVariable, targetVariable)
     print(f"CATE Score: {cate_score}")
