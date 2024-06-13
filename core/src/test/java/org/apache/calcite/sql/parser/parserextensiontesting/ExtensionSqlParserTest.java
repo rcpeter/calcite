@@ -67,6 +67,6 @@ class ExtensionSqlParserTest extends SqlParserTest {
     sql("select causal impact of x on ^y^")
         .fails("Unknown identifier 'Y'");
     sql("select causal impact of x on y")
-        .ok("select causal impact of x on y");
+        .ok("SELECT CAUSAL IMPACT OF `X` ON `Y`");
   }
 }
