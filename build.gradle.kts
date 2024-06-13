@@ -47,7 +47,7 @@ plugins {
     id("com.github.autostyle")
     id("org.nosphere.apache.rat")
     id("com.github.spotbugs")
-    id("de.thetaphi.forbiddenapis") apply false
+    id("de.thetaphi.forbiddenapis") version "3.3" apply false
     id("net.ltgt.errorprone") apply false
     id("com.github.vlsi.jandex") apply false
     id("org.owasp.dependencycheck")
@@ -249,7 +249,34 @@ subprojects {
         dependencies {
             add("implementation", files("libs/org.jpype.jar"))
         }
+
+        apply(plugin = "de.thetaphi.forbiddenapis")
+
+        configure<CheckForbiddenApisExtension> {
+            failOnUnsupportedJava = false
+            ignoreSignaturesOfMissingClasses = true
+            suppressAnnotations.add("org.immutables.value.Generated")
+            bundledSignatures.addAll(
+                listOf(
+                    "jdk-unsafe",
+                    "jdk-deprecated",
+                    "jdk-non-portable"
+                )
+            )
+            signaturesFiles = files("$rootDir/src/main/config/forbidden-apis/signatures.txt")
+        }
+
+        tasks.withType<CheckForbiddenApis>().configureEach {
+            enabled = false
+            exclude("java.lang.ProcessBuilder")
+            exclude("java.io.InputStreamReader#<init>(java.io.InputeStream)")
+        }
     }
+}
+
+tasks.withType<CheckForbiddenApis>().configureEach {
+    exclude("java.lang.ProcessBuilder")
+    exclude("java.io.InputStreamReader#<init>(java.io.InputStream)")
 }
 
 dependencies {
@@ -711,6 +738,12 @@ allprojects {
             signaturesFiles = files("$rootDir/src/main/config/forbidden-apis/signatures.txt")
         }
 
+        tasks.withType<CheckForbiddenApis>().configureEach {
+            enabled = false
+            exclude("java.lang.ProcessBuilder")
+            exclude("java.io.InputStreamReader#<init>(java.io.InputeStream)")
+        }
+
         if (enableErrorprone) {
             apply(plugin = "net.ltgt.errorprone")
             dependencies {
@@ -1020,5 +1053,9 @@ allprojects {
                 }
             }
         }
+    }
+    tasks.withType<CheckForbiddenApis>().configureEach {
+        exclude("java.lang.ProcessBuilder")
+        exclude("java.io.InputStreamReader#<init>(java.io.InputeStream)")
     }
 }

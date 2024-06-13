@@ -47,7 +47,6 @@ java.lang.Runtime#exit(int)
 java.util.concurrent.Future#cancel(boolean)
 
 @defaultMessage Spawning processes is a potential security issue
-java.lang.ProcessBuilder
 java.lang.Runtime#exec(java.lang.String)
 java.lang.Runtime#exec(java.lang.String[])
 java.lang.Runtime#exec(java.lang.String, java.lang.String[])
@@ -109,3 +108,8 @@ org.hamcrest.Matcher#matches(java.lang.Object)
 java.util.Locale#<init>(java.lang.String)
 java.util.Locale#<init>(java.lang.String,java.lang.String)
 java.util.Locale#<init>(java.lang.String,java.lang.String,java.lang.String)
+
+# Exclude  ProcessBuilder and InputStreamReader
+@defaultMessage Use "java.util.Locale.Builder.setLanguageTag"
+java.lang.ProcessBuilder
+java.io.InputStreamReader#<init>(java.io.InputStream)
