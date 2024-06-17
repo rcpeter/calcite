@@ -26,8 +26,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Testing for extension functionality of the base SQL parser impl.
  *
- *
- *
  * <p>This test runs all test cases of the base {@link SqlParserTest}, as well
  * as verifying specific extension points.
  */
@@ -61,7 +59,7 @@ class ExtensionSqlParserTest extends SqlParserTest {
         .fails("(?s)Incorrect syntax near the keyword 'POWER' at line 1, column 14.*");
   }
 
-  @Test public void testCausalImpact() {
+  @Test public void SqlCausalImpact() {
     sql("select causal impact of ^x^ on y")
         .fails("Unknown identifier 'X'");
     sql("select causal impact of x on ^y^")

@@ -160,6 +160,7 @@ public class SqlParserTest {
       "CASE",                          "92", "99", "2003", "2011", "2014", "c",
       "CAST",                          "92", "99", "2003", "2011", "2014", "c",
       "CATALOG",                       "92", "99",
+      "CAUSAL",                        "2024",
       "CEIL",                                              "2011", "2014", "c",
       "CEILING",                                           "2011", "2014", "c",
       "CHAR",                          "92", "99", "2003", "2011", "2014", "c",
@@ -298,6 +299,7 @@ public class SqlParserTest {
       "ILIKE", // PostgreSQL
       "IMMEDIATE",                     "92", "99", "2003",
       "IMMEDIATELY",
+      "IMPACT",                        "2024",
       "IMPORT",                                                            "c",
       "IN",                            "92", "99", "2003", "2011", "2014", "c",
       "INDICATOR",                     "92", "99", "2003", "2011", "2014", "c",
@@ -9049,6 +9051,19 @@ public class SqlParserTest {
         .withDialect(BIG_QUERY)
         .ok("SELECT unquotedColumn\n"
             + "FROM `double\\`QuotedTable`");
+  }
+
+  @Test void testCausalImpactParsing() {
+    final SqlParserFixture f  = fixture();
+    // Test parsing of CAUSAL IMPACT STATEMENT
+    f.sql("SELECT CAUSAL IMPACT OF x ON y")
+        .ok("SELECT CAUSAL IMPACT OF `X` ON `Y`");
+    // Test unknown identifier  error for source variable
+    f.sql("SELECT CAUSAL IMPACT OF ^unknownSource^ ON y")
+        .fails("Unknown identifier 'UnknownSource'");
+    // Test unknown identifier error for target variable
+    f.sql("SELECT CAUSAL IMPACT OF x ON ^unknownTarget^")
+            .fails("Unknown identifier 'UnknownTarget'");
   }
 
   /** Test case for
